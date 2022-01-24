@@ -84,7 +84,7 @@ head(d, 20)
 
 #Cleaning
 
-turkey <- tm_map(turkey, removeWords, c("one", "pakistan", "important", "turkeys", "like"))
+turkey <- tm_map(turkey, removeWords, c("one", "see" "pakistan", "important", "turkeys", "like"))
 
 turkey_tdm <- TermDocumentMatrix(turkey) 
 m <- as.matrix(turkey_tdm)
@@ -93,6 +93,55 @@ d <- data.frame(word = names(v), freq = v)
 
 
 head(d, 20)
+
+#Cleaning
+
+turkey <- tm_map(turkey, removeWords, c("see"))
+
+turkey_tdm <- TermDocumentMatrix(turkey) 
+m <- as.matrix(turkey_tdm)
+v <- sort(rowSums(m), decreasing = TRUE)
+d <- data.frame(word = names(v), freq = v)
+
+
+head(d, 20)
+
+#Cleaning
+
+turkey <- tm_map(turkey, removeWords, c("terrorist"))
+
+turkey_tdm <- TermDocumentMatrix(turkey) 
+m <- as.matrix(turkey_tdm)
+v <- sort(rowSums(m), decreasing = TRUE)
+d <- data.frame(word = names(v), freq = v)
+
+
+head(d, 20)
+
+#Cleaning
+
+turkey <- tm_map(turkey, removeWords, c("never"))
+
+turkey_tdm <- TermDocumentMatrix(turkey) 
+m <- as.matrix(turkey_tdm)
+v <- sort(rowSums(m), decreasing = TRUE)
+d <- data.frame(word = names(v), freq = v)
+
+
+head(d, 20)
+
+#Cleaning
+
+turkey <- tm_map(turkey, removeWords, c("first"))
+
+turkey_tdm <- TermDocumentMatrix(turkey) 
+m <- as.matrix(turkey_tdm)
+v <- sort(rowSums(m), decreasing = TRUE)
+d <- data.frame(word = names(v), freq = v)
+
+
+head(d, 20)
+
 
 turkeytable <- head(d, 20) #Create a table for the most common 20 words.
 grid.table(turkeytable)
@@ -113,5 +162,4 @@ head(d, 10)
 #Plot word frequencies. To plot the most common 10 words, do not forget to run head(d, 10) before this code.
 
 barplot(d[1:10,]$freq, las = 2, names.arg = d[1:10,]$word, col = "blue", main = "Most Frequent Words - Recep Tayyip Erdogan", ylab = "Word Frequencies", cex.names = 0.75)
-
 
