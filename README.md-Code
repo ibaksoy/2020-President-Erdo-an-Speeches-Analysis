@@ -11,7 +11,7 @@ install.packages("readr")
 install.packages("tidyr")
 install.packages("qdap")
 install.packages("Rcpp")
-
+install.packages("gridExtra")
 
 
 library(tm) #Load the required packages
@@ -26,6 +26,7 @@ library(readr)
 library(tidyr)
 library(qdap)
 library(Rcpp)
+library(gridExtra)
 
 TR <- readLines(file.choose()) #Import the text file
 turkey <- Corpus(VectorSource(TR)) #Load the text file as a corpus
@@ -55,11 +56,11 @@ v <- sort(rowSums(m), decreasing = TRUE)
 d <- data.frame(word = names(v), freq = v)
 
 
-head(d, 10)
+head(d, 20)
 
 #Clean the text by removing several meaningless words
 
-turkey <- tm_map(turkey, removeWords, c("will", "years", "also"))
+turkey <- tm_map(turkey, removeWords, c("will", "years", "also", "syria", "billion", "brothers", "fight", "especially"))
 
 turkey_tdm <- TermDocumentMatrix(turkey) 
 m <- as.matrix(turkey_tdm)
@@ -67,11 +68,11 @@ v <- sort(rowSums(m), decreasing = TRUE)
 d <- data.frame(word = names(v), freq = v)
 
 
-head(d, 10)
+head(d, 20)
 
 #Cleaning
 
-turkey <- tm_map(turkey, removeWords, c("syria"))
+turkey <- tm_map(turkey, removeWords, c("provide", "pandemic", "sisters", "continue", "eastern"))
 
 turkey_tdm <- TermDocumentMatrix(turkey) 
 m <- as.matrix(turkey_tdm)
@@ -79,11 +80,11 @@ v <- sort(rowSums(m), decreasing = TRUE)
 d <- data.frame(word = names(v), freq = v)
 
 
-head(d, 10)
+head(d, 20)
 
 #Cleaning
 
-turkey <- tm_map(turkey, removeWords, c("billion", "country"))
+turkey <- tm_map(turkey, removeWords, c("one", "pakistan", "important", "turkeys", "like"))
 
 turkey_tdm <- TermDocumentMatrix(turkey) 
 m <- as.matrix(turkey_tdm)
@@ -91,20 +92,10 @@ v <- sort(rowSums(m), decreasing = TRUE)
 d <- data.frame(word = names(v), freq = v)
 
 
-head(d, 10)
+head(d, 20)
 
-#Cleaning
-
-turkey <- tm_map(turkey, removeWords, c("brothers"))
-
-turkey_tdm <- TermDocumentMatrix(turkey) 
-m <- as.matrix(turkey_tdm)
-v <- sort(rowSums(m), decreasing = TRUE)
-d <- data.frame(word = names(v), freq = v)
-
-
-head(d, 10)
-
+turkeytable <- head(d, 20) #Create a table for the most common 20 words.
+grid.table(turkeytable)
 
 #Generate the Word Cloud
 
@@ -119,7 +110,8 @@ findAssocs(turkey_tdm, terms = "turkey", corlimit = 0.3)
 
 head(d, 10)
 
-#Plot word frequencies
+#Plot word frequencies. To plot the most common 10 words, do not forget to run head(d, 10) before this code.
 
 barplot(d[1:10,]$freq, las = 2, names.arg = d[1:10,]$word, col = "blue", main = "Most Frequent Words - Recep Tayyip Erdogan", ylab = "Word Frequencies", cex.names = 0.75)
+
 
